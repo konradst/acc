@@ -1,0 +1,40 @@
+{
+  "name": "kstyler",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/kstyler/src",
+  "projectType": "library",
+  "release": {
+    "version": {
+      "generatorOptions": {
+        "packageRoot": "dist/{projectRoot}",
+        "currentVersionResolver": "git-tag",
+        "fallbackCurrentVersionResolver": "disk"
+      }
+    }
+  },
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/kstyler",
+        "main": "libs/kstyler/src/index.ts",
+        "tsConfig": "libs/kstyler/tsconfig.lib.json",
+        "assets": ["libs/kstyler/*.md"]
+      }
+    },
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "dist/{projectRoot}"
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/kstyler/jest.config.ts"
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { kstyler } from '@konradst/kstyler';
+console.log(kstyler());
 @Component({
   selector: 'app-nx-welcome',
   imports: [CommonModule],
