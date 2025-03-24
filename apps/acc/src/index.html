@@ -8,6 +8,46 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
   </head>
   <body>
+    <script>
+      var client;
+      var access_token;
+
+      function initClient() {
+        client = google.accounts.oauth2.initTokenClient({
+          client_id:
+            '2823289439-lnanojvb908r3f9nfsq541hfqefn822v.apps.googleusercontent.com',
+          scope: 'https://www.googleapis.com/auth/cloud-platform',
+          callback: (tokenResponse) => {
+            access_token = tokenResponse.access_token;
+          },
+        });
+      }
+      function getToken() {
+        client.requestAccessToken();
+      }
+      function revokeToken() {
+        google.accounts.oauth2.revoke(access_token, () => {
+          console.log('access token revoked');
+        });
+      }
+      function loadCalendar() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', ' https://apigee.googleapis.com/v1/organizations');
+        xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
+        xhr.send();
+      }
+    </script>
+
+    <!-- <script
+      src="https://accounts.google.com/gsi/client"
+      onload="initClient()"
+      async
+      defer
+    ></script> -->
+    <h1>Google Identity Services Authorization Token model</h1>
+    <button onclick="getToken();">Get access token</button><br /><br />
+    <button onclick="loadCalendar();">Load Calendar</button><br /><br />
+    <button onclick="revokeToken();">Revoke token</button>
     <app-root></app-root>
   </body>
 </html>

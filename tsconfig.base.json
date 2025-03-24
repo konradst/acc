@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@konradst/angular-gis": ["libs/angular-gis/src/index.ts"],
       "@konradst/kstyler": ["libs/kstyler/src/index.ts"]
     }
   },
