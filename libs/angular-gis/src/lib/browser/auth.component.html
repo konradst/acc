@@ -1,2 +1,5 @@
-<pre>clientId {{ authService.clientId }}</pre>
-<pre>scope {{ authService.scope }}</pre>
+@if(authService.accessToken()) {
+<button (click)="revokeToken()">Logout</button>
+} @else {
+<button (click)="getToken()">Login with Google</button>
+}

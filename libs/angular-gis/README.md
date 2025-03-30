@@ -49,6 +49,10 @@ Run `nx test angular-gis` to execute the unit tests.
 https://developers.google.com/identity/oauth2/web/guides/overview
 https://developers.google.com/identity/oauth2/web/guides/migration-to-gis
 
+### GIS typings
+
+https://stackoverflow.com/questions/72238650/how-to-use-google-identity-services-javascript-sdk-with-vue-typescript
+
 ### Registering providers in environment injector (the standalone way) tutorial
 
 https://dev.to/railsstudent/how-to-register-providers-in-environment-injector-in-angular-4ehl

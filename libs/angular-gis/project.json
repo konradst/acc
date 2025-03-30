@@ -2,7 +2,7 @@
   "name": "angular-gis",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/angular-gis/src",
-  "prefix": "ng-gis",
+  "prefix": "lib-angular-gis",
   "projectType": "library",
   "release": {
     "version": {
