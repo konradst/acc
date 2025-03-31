@@ -1,0 +1,14 @@
+<h1>Organization</h1>
+@if(authService.accessToken()) {
+<h2>Selected {{ organizationStore.selectedOrganization()?.organization }}</h2>
+<button (click)="reload()">Reload</button>
+} @else { Please log in }
+
+<div>
+  @for(organization of organizationStore.entities(); track
+  organization.organization) {
+  <button (click)="selectOrganization(organization)">
+    {{ organization.organization }}
+  </button>
+  }
+</div>
