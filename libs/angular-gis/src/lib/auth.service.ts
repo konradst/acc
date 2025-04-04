@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { GOOGLE_GIS_CLIENT_ID } from './google-gis-client-id.token';
 import { GOOGLE_GIS_SCOPE } from './google-gis-scope.token';
 import { GoogleTokenClient } from './gis';
@@ -11,4 +11,5 @@ export class AuthService {
   client?: GoogleTokenClient;
 
   accessToken = signal<string | undefined>(undefined);
+  isAuthenticated = computed(() => !!this.accessToken());
 }

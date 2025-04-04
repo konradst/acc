@@ -4,7 +4,9 @@ import { AuthService } from '@konradst/angular-gis';
 import { Organization } from './organization';
 import { map } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class OrganizationHttpService {
   private readonly httpClient = inject(HttpClient);
   private readonly authService = inject(AuthService);

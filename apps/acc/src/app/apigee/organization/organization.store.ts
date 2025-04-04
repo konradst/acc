@@ -29,6 +29,7 @@ const initialState: OrganizationState = {
 };
 
 export const OrganizationStore = signalStore(
+  { providedIn: 'root' },
   withState(initialState),
   withEntities<Organization>(),
   withProps(() => ({
