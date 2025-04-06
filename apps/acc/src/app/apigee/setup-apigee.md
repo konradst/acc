@@ -1,4 +1,4 @@
-# Setting up Apigee
+# GCP project setup
 
 ## Configure OAuth 
 
