@@ -20,7 +20,7 @@ export class AuthComponent implements AfterViewInit {
   private readonly document = inject(DOCUMENT);
   private readonly window = this.document.defaultView as GoogleWindow;
   private readonly platformId = inject(PLATFORM_ID);
-  
+
   // UI state signals
   isLoading = signal(false);
   isCalendarLoading = signal(false);
@@ -79,7 +79,7 @@ export class AuthComponent implements AfterViewInit {
     if (!token) {
       return;
     }
-    
+
     try {
       this.isLoading.set(true);
       this.window.google.accounts.oauth2.revoke(token, () => {
@@ -95,39 +95,39 @@ export class AuthComponent implements AfterViewInit {
   /**
    * Loads calendar data as an example API call
    */
-  loadCalendar(): void {
-    const token = this.authService.accessToken();
-    if (!token) {
-      this.errorMessage.set('Not authenticated. Please login first.');
-      return;
-    }
-    
-    try {
-      this.isCalendarLoading.set(true);
-      const xhr = new XMLHttpRequest();
-      xhr.open('GET', 'https://apigee.googleapis.com/v1/organizations');
-      xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-      
-      xhr.onload = () => {
-        this.isCalendarLoading.set(false);
-        if (xhr.status === 200) {
-          console.log('Calendar data loaded successfully', JSON.parse(xhr.responseText));
-        } else {
-          this.handleError(`API request failed with status: ${xhr.status}`, xhr.responseText);
-        }
-      };
-      
-      xhr.onerror = () => {
-        this.isCalendarLoading.set(false);
-        this.handleError('Network error while loading calendar data');
-      };
-      
-      xhr.send();
-    } catch (error) {
-      this.isCalendarLoading.set(false);
-      this.handleError('Failed to load calendar data', error);
-    }
-  }
+  // loadCalendar(): void {
+  //   const token = this.authService.accessToken();
+  //   if (!token) {
+  //     this.errorMessage.set('Not authenticated. Please login first.');
+  //     return;
+  //   }
+
+  //   try {
+  //     this.isCalendarLoading.set(true);
+  //     const xhr = new XMLHttpRequest();
+  //     xhr.open('GET', 'https://apigee.googleapis.com/v1/organizations');
+  //     xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+
+  //     xhr.onload = () => {
+  //       this.isCalendarLoading.set(false);
+  //       if (xhr.status === 200) {
+  //         console.log('Calendar data loaded successfully', JSON.parse(xhr.responseText));
+  //       } else {
+  //         this.handleError(`API request failed with status: ${xhr.status}`, xhr.responseText);
+  //       }
+  //     };
+
+  //     xhr.onerror = () => {
+  //       this.isCalendarLoading.set(false);
+  //       this.handleError('Network error while loading calendar data');
+  //     };
+
+  //     xhr.send();
+  //   } catch (error) {
+  //     this.isCalendarLoading.set(false);
+  //     this.handleError('Failed to load calendar data', error);
+  //   }
+  // }
 
   /**
    * Loads the Google authentication script
@@ -138,18 +138,18 @@ export class AuthComponent implements AfterViewInit {
     script.src = 'https://accounts.google.com/gsi/client';
     script.async = true;
     script.defer = true;
-    
+
     script.onload = () => {
       this.initClient();
     };
-    
+
     script.onerror = () => {
       this.handleError('Failed to load Google authentication script');
     };
-    
+
     this.renderer.appendChild(this.document.body, script);
   }
-  
+
   /**
    * Handles and logs errors
    */
