@@ -5,7 +5,12 @@ import {
   withProps,
   withState,
 } from '@ngrx/signals';
-import { setEntities, withEntities } from '@ngrx/signals/entities';
+import {
+  addEntity,
+  removeEntity,
+  setEntities,
+  withEntities,
+} from '@ngrx/signals/entities';
 import { tapResponse } from '@ngrx/operators';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, switchMap, tap } from 'rxjs';
@@ -14,9 +19,6 @@ import { KvmHttpService } from './kvm-http.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Kvm } from './kvm';
 import { OrganizationStore } from '../organization/organization.store';
-import { Organization } from '../organization/organization';
-import { Api } from '../api/api';
-import { Environment } from '../environment/environment';
 import { KvmParams } from './kvm-params';
 
 interface KvmState {
@@ -53,6 +55,51 @@ export const KvmStore = signalStore(
                     selectId: (kvm) => kvm.name,
                   })
                 );
+              },
+              error: (error: HttpErrorResponse) =>
+                patchState(store, { error: error.message }),
+              finalize: () => patchState(store, { isLoading: false }),
+            })
+          );
+        })
+      )
+    ),
+    createKvm: rxMethod<{
+      params: KvmParams;
+      kvm: Kvm;
+    }>(
+      pipe(
+        tap(() => patchState(store, { isLoading: true })),
+        switchMap((action) => {
+          return store.kvmHttpService.createKvm(action.params, action.kvm).pipe(
+            tapResponse({
+              next: (kvm) => {
+                patchState(
+                  store,
+                  addEntity(kvm, {
+                    selectId: (kvm) => kvm.name,
+                  })
+                );
+              },
+              error: (error: HttpErrorResponse) =>
+                patchState(store, { error: error.message }),
+              finalize: () => patchState(store, { isLoading: false }),
+            })
+          );
+        })
+      )
+    ),
+    deleteKvm: rxMethod<{
+      params: KvmParams;
+      kvm: Kvm;
+    }>(
+      pipe(
+        tap(() => patchState(store, { isLoading: true })),
+        switchMap((action) => {
+          return store.kvmHttpService.deleteKvm(action.params, action.kvm).pipe(
+            tapResponse({
+              next: (kvm) => {
+                patchState(store, removeEntity(kvm.name));
               },
               error: (error: HttpErrorResponse) =>
                 patchState(store, { error: error.message }),

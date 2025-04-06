@@ -36,4 +36,39 @@ export class KvmHttpService {
         )
       );
   }
+
+  /**
+   * @todo api and environment entries
+   * @param kvmParams
+   * @returns
+   */
+  createKvm(meta: KvmParams, kvm: Kvm) {
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authService.accessToken(),
+    });
+    return this.httpClient.post<Kvm>(
+      `https://apigee.googleapis.com/v1/organizations/${meta.organizationName}/keyvaluemaps`,
+      kvm,
+      {
+        headers,
+      }
+    );
+  }
+
+  /**
+   * @todo api and environment entries
+   * @param kvmParams
+   * @returns
+   */
+  deleteKvm(meta: KvmParams, kvm: Kvm) {
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authService.accessToken(),
+    });
+    return this.httpClient.delete<Kvm>(
+      `https://apigee.googleapis.com/v1/organizations/${meta.organizationName}/keyvaluemaps/${kvm.name}`,
+      {
+        headers,
+      }
+    );
+  }
 }

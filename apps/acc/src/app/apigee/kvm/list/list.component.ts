@@ -16,16 +16,22 @@ export class ListComponent {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
 
+  showAddModal = false;
+
   constructor() {
     this.reload();
   }
 
   add() {
-    console.log('add');
+    this.showAddModal = true;
+  }
+
+  create(kvm: Kvm) {
+    this.kvmStore.createKvm({ params: this.params(), kvm });
   }
 
   delete(kvm: Kvm) {
-    console.log('delete', kvm);
+    this.kvmStore.deleteKvm({ params: this.params(), kvm });
   }
 
   reload() {
