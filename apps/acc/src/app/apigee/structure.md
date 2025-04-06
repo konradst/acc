@@ -14,16 +14,16 @@ graph TD;
     EnvEntry["Entry<br/>(list, add, edit, delete)"]:::level4;
 
     %% Define Relationships and Cardinality
-    Org -- "1..*" --> API;
-    Org -- "1..*" --> Env;
-    Org -- "1..*"--> OrgKVM;
+    Org -- "0..*" --> API;
+    Org -- "0..*" --> Env;
+    Org -- "0..*"--> OrgKVM;
 
-    API -- "1..*" --> ApiKVM;
-    Env -- "1..*" --> EnvKVM;
+    API -- "0..*" --> ApiKVM;
+    Env -- "0..*" --> EnvKVM;
 
-    OrgKVM -- "1..*" --> OrgEntry;
-    ApiKVM -- "1..*" --> ApiEntry;
-    EnvKVM -- "1..*" --> EnvEntry;
+    OrgKVM -- "0..*" --> OrgEntry;
+    ApiKVM -- "0..*" --> ApiEntry;
+    EnvKVM -- "0..*" --> EnvEntry;
 
     %% Optional Styling (adjust colors/shapes as needed)
     classDef level1 fill:#f9f,stroke:#333,stroke-width:2px;
