@@ -13,6 +13,16 @@ export const appRoutes: Route[] = [
       ),
   },
   {
+    path: 'apigee/organization/:organization/api',
+    canMatch: [
+      () =>
+        inject(AuthService).isAuthenticated() &&
+        inject(OrganizationStore).selectedOrganization(),
+    ],
+    loadComponent: () =>
+      import('./apigee/api/list/list.component').then((m) => m.ListComponent),
+  },
+  {
     path: 'apigee/organization/:organization/environment',
     canMatch: [
       () =>
@@ -31,5 +41,5 @@ export const appRoutes: Route[] = [
         (m) => m.DashboardComponent
       ),
   },
-  // { path: '**', redirectTo: 'dashboard' },
+  { path: '**', redirectTo: 'dashboard' },
 ];

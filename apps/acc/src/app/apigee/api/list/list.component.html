@@ -1,0 +1,12 @@
+<h1>Environments</h1>
+<button (click)="reload()">Reload apis</button>
+<ul>
+  @for(api of apiStore.entities(); track api.name) {
+  <li>
+    {{ api.name }}
+    <ul>
+      <li><button>List KeyValueMaps</button></li>
+    </ul>
+  </li>
+  }
+</ul>
