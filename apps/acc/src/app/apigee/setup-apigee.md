@@ -13,9 +13,9 @@ We won't publish our app (we'll add test users).
 
 1. [Configure consent screen](https://developers.google.com/workspace/guides/configure-oauth-consent)
 2. [Configure client ID credentials](https://developers.google.com/workspace/guides/create-credentials#oauth-client-id)
-3. Provide GOOGLE_GIS_CLIENT_ID and GOOGLE_GIS_SCOPE in the Angular application
-  - `GOOGLE_GIS_CLIENT_ID` - takie it from the [Credentials](https://console.cloud.google.com/apis/credentials) configured in step 1.
-  - `GOOGLE_GIS_SCOPE` - for apigee it's `https://www.googleapis.com/auth/cloud-platform`
+3. Provide the client ID and scope in the Angular application:
+    - `GOOGLE_GIS_CLIENT_ID` - takie it from the [Credentials](https://console.cloud.google.com/apis/credentials) configured in step 1.
+    - `GOOGLE_GIS_SCOPE` - for apigee it's `https://www.googleapis.com/auth/cloud-platform`
 
 
 ## Setup Apigee X
