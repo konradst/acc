@@ -6,7 +6,9 @@
   <li>
     <h2>{{ environment.environment }}</h2>
     <ul>
-      <li><button>List KeyValueMaps</button></li>
+      <li>
+        <button>List {{ environment.environment }} KeyValueMaps</button>
+      </li>
     </ul>
   </li>
   } @empty { No environments found. }

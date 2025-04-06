@@ -1,0 +1,20 @@
+<h1>Key value maps</h1>
+<button (click)="reload()">Reload key value maps</button>
+<button (click)="add()">Add a key value map</button>
+<ul>
+  @for(kvm of kvmStore.entities(); track kvm.name) {
+  <li>
+    <h2>{{ kvm.name }}</h2>
+    <ul>
+      <li>
+        <button (click)="listEntries(kvm)">List {{ kvm.name }} entries</button>
+      </li>
+      <li>
+        <button (click)="delete(kvm)">
+          Delete key value map {{ kvm.name }}
+        </button>
+      </li>
+    </ul>
+  </li>
+  } @empty { No kvms found. }
+</ul>

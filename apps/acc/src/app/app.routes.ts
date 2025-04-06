@@ -13,7 +13,27 @@ export const appRoutes: Route[] = [
       ),
   },
   {
-    path: 'apigee/organization/:organization/api',
+    path: 'apigee/organization/:organizationName/keyvaluemap',
+    canMatch: [
+      () =>
+        inject(AuthService).isAuthenticated() &&
+        inject(OrganizationStore).selectedOrganization(),
+    ],
+    loadComponent: () =>
+      import('./apigee/kvm/list/list.component').then((m) => m.ListComponent),
+  },
+  {
+    path: 'apigee/organization/:organizationName/keyvaluemap/:kvmName/entry',
+    canMatch: [
+      () =>
+        inject(AuthService).isAuthenticated() &&
+        inject(OrganizationStore).selectedOrganization(),
+    ],
+    loadComponent: () =>
+      import('./apigee/kvm/list/list.component').then((m) => m.ListComponent),
+  },
+  {
+    path: 'apigee/organization/:organizationName/api',
     canMatch: [
       () =>
         inject(AuthService).isAuthenticated() &&
@@ -23,7 +43,7 @@ export const appRoutes: Route[] = [
       import('./apigee/api/list/list.component').then((m) => m.ListComponent),
   },
   {
-    path: 'apigee/organization/:organization/environment',
+    path: 'apigee/organization/:organizationName/environment',
     canMatch: [
       () =>
         inject(AuthService).isAuthenticated() &&
@@ -41,5 +61,6 @@ export const appRoutes: Route[] = [
         (m) => m.DashboardComponent
       ),
   },
-  { path: '**', redirectTo: 'dashboard' },
+  { pathMatch: 'full', path: '', redirectTo: 'dashboard' },
+  // { path: '**', redirectTo: 'dashboard' },
 ];
