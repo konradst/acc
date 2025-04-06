@@ -2,22 +2,28 @@
   <header class="bg-white shadow-sm border-b border-gray-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center py-4">
-        <h1 class="text-2xl font-bold text-primary-600">Acc</h1>
-        <lib-angular-gis-browser-auth class="ml-4"></lib-angular-gis-browser-auth>
+        <h1 class="text-2xl font-bold text-primary-600">
+          <a routerLink="/">Acc</a>
+        </h1>
+        <lib-angular-gis-browser-auth
+          class="ml-4"
+        ></lib-angular-gis-browser-auth>
       </div>
     </div>
   </header>
-  
+
   <div class="flex-1 flex">
-    <app-nav-left class="w-64 bg-white shadow-sm border-r border-gray-200"></app-nav-left>
-    
+    <app-nav-left
+      class="w-64 bg-white shadow-sm border-r border-gray-200"
+    ></app-nav-left>
+
     <main class="flex-1 p-6">
       <div class="max-w-7xl mx-auto">
         <router-outlet></router-outlet>
       </div>
     </main>
   </div>
-  
+
   <footer class="bg-white shadow-sm border-t border-gray-200 mt-auto">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
       <div class="flex justify-between items-center">
