@@ -30,7 +30,9 @@ export const appRoutes: Route[] = [
         inject(OrganizationStore).selectedOrganization(),
     ],
     loadComponent: () =>
-      import('./apigee/kvm/list/list.component').then((m) => m.ListComponent),
+      import('./apigee/kvm-entry/list/list.component').then(
+        (m) => m.ListComponent
+      ),
   },
   {
     path: 'apigee/organization/:organizationName/api',

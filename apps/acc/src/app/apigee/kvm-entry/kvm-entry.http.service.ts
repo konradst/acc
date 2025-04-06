@@ -1,39 +1,36 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { AuthService } from '@konradst/angular-gis';
-import { Kvm } from './kvm';
+import { KvmEntry } from './kvm-entry';
 import { map } from 'rxjs/operators';
-import { KvmParams } from './kvm-params';
+import { KvmEntryParams } from './kvm-entry-params';
 
 @Injectable({
   providedIn: 'root',
 })
-export class KvmHttpService {
+export class KvmEntryHttpService {
   private readonly httpClient = inject(HttpClient);
   private readonly authService = inject(AuthService);
 
   /**
-   * @todo api and environment kvms
+   * @todo api and environment entries
    * @param kvmParams
    * @returns
    */
-  getKvms(kvmParams: KvmParams) {
+  getKvmEntries(kvmEntryParams: KvmEntryParams) {
     const headers = new HttpHeaders({
       Authorization: 'Bearer ' + this.authService.accessToken(),
     });
     return this.httpClient
-      .get<Kvm['name'][]>(
-        `https://apigee.googleapis.com/v1/organizations/${kvmParams.organizationName}/keyvaluemaps`,
+      .get<{
+        keyValueEntries: KvmEntry[];
+        nextPageToken: string;
+      }>(
+        `https://apigee.googleapis.com/v1/organizations/${kvmEntryParams.organizationName}/keyvaluemaps/${kvmEntryParams.kvmName}/entries`,
         {
           headers,
         }
       )
-      .pipe(
-        map((response) =>
-          response.map((kvm) => ({
-            name: kvm,
-          }))
-        )
-      );
+      .pipe(map((response) => response.keyValueEntries));
   }
 }

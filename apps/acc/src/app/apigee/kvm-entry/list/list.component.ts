@@ -1,18 +1,18 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { KvmStore } from '../kvm.store';
-import { KvmHttpService } from '../kvm-http.service';
-import { Kvm } from '../kvm';
+import { KvmEntryStore } from '../kvm-entry.store';
+import { KvmEntryHttpService } from '../kvm-entry.http.service';
+import { KvmEntry } from '../kvm-entry';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  providers: [KvmHttpService],
+  providers: [KvmEntryHttpService],
   selector: 'app-kvmgee-kvm-list',
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ListComponent {
-  readonly kvmStore = inject(KvmStore);
+  readonly kvmEntryStore = inject(KvmEntryStore);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
 
@@ -24,19 +24,20 @@ export class ListComponent {
     console.log('add');
   }
 
-  delete(kvm: Kvm) {
+  delete(kvm: KvmEntry) {
     console.log('delete', kvm);
   }
 
   reload() {
-    this.kvmStore.loadKvms({
+    this.kvmEntryStore.loadKvms({
       organizationName: this.route.snapshot.params['organizationName'],
+      kvmName: this.route.snapshot.params['kvmName'],
       apiName: this.route.snapshot.params['apiName'],
       environmentName: this.route.snapshot.params['environmentName'],
     });
   }
 
-  listEntries(kvm: Kvm) {
-    this.router.navigate([kvm.name, 'entry'], { relativeTo: this.route });
+  save(kvmEntry: KvmEntry) {
+    console.log(kvmEntry);
   }
 }

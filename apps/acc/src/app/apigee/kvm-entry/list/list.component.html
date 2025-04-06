@@ -1,0 +1,23 @@
+<h1>Key value entries</h1>
+<button (click)="reload()">Reload key value entries</button>
+<button (click)="add()">Add a key value entry</button>
+<ul>
+  @for(kvmEntry of kvmEntryStore.entities(); track kvmEntry.name) {
+  <li>
+    <h2>{{ kvmEntry.name }}</h2>
+    <ul>
+      <li>
+        <input type="text" [value]="kvmEntry.value" name="value" />
+        <button (click)="save(kvmEntry)">
+          Save {{ kvmEntry.name }} value changes
+        </button>
+      </li>
+      <li>
+        <button (click)="delete(kvmEntry)">
+          Delete key value entry {{ kvmEntry.name }}
+        </button>
+      </li>
+    </ul>
+  </li>
+  } @empty { No kvm entries found. }
+</ul>
