@@ -4,10 +4,13 @@
   @for(organization of organizationStore.entities(); track
   organization.organization) {
   <li>
-    <button (click)="selectOrganization(organization)">
-      Select {{ organization.organization }}
-    </button>
+    <h2>{{ organization.organization }}</h2>
     <ul>
+      <li>
+        <button (click)="selectOrganization(organization)">
+          Select {{ organization.organization }}
+        </button>
+      </li>
       <li>
         <button (click)="selectOrganizationListKVMs(organization)">
           Select {{ organization.organization }} and list KeyValueMaps
@@ -25,5 +28,5 @@
       </li>
     </ul>
   </li>
-  }
+  } @empty { No organizations found. }
 </ul>

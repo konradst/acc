@@ -1,12 +1,12 @@
-<h1>Environments</h1>
+<h1>APIs</h1>
 <button (click)="reload()">Reload apis</button>
 <ul>
   @for(api of apiStore.entities(); track api.name) {
   <li>
-    {{ api.name }}
+    <h2>{{ api.name }}</h2>
     <ul>
       <li><button>List KeyValueMaps</button></li>
     </ul>
   </li>
-  }
+  } @empty { No apis found. }
 </ul>

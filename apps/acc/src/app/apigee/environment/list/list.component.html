@@ -4,10 +4,10 @@
   @for(environment of environmentStore.entities(); track
   environment.environment) {
   <li>
-    {{ environment.environment }}
+    <h2>{{ environment.environment }}</h2>
     <ul>
       <li><button>List KeyValueMaps</button></li>
     </ul>
   </li>
-  }
+  } @empty { No environments found. }
 </ul>
