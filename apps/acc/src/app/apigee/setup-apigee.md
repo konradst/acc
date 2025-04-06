@@ -1,5 +1,9 @@
 # GCP project setup
 
+## Create a project
+
+New Gmail users get free GCP credits and Apigee trial for a limited time.
+
 ## Configure OAuth 
 
 We're using OAuth for JS client application.
