@@ -15,13 +15,15 @@ export class ListComponent {
   readonly kvmEntryStore = inject(KvmEntryStore);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  
+  showAddModal = false;
 
   constructor() {
     this.reload();
   }
 
   add() {
-    console.log('add');
+    this.showAddModal = true;
   }
 
   delete(kvm: KvmEntry) {
