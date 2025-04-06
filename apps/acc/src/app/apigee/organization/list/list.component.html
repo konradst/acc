@@ -1,0 +1,29 @@
+<h1>Organizations</h1>
+<button (click)="reload()">reload</button>
+<ul>
+  @for(organization of organizationStore.entities(); track
+  organization.organization) {
+  <li>
+    <button (click)="selectOrganization(organization)">
+      Select {{ organization.organization }}
+    </button>
+    <ul>
+      <li>
+        <button (click)="selectOrganizationKVMs(organization)">
+          Select {{ organization.organization }} and list KeyValueMaps
+        </button>
+      </li>
+      <li>
+        <button (click)="selectOrganizationEnvironments(organization)">
+          Select {{ organization.organization }} and list environments
+        </button>
+      </li>
+      <li>
+        <button (click)="selectOrganizationAPIs(organization)">
+          Select {{ organization.organization }} and list APIs
+        </button>
+      </li>
+    </ul>
+  </li>
+  }
+</ul>

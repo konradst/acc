@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { NavButtonComponent } from '../../apigee/organization/nav-button/nav-button.component';
+import { NavButtonComponent as OrganizationNavButtonComponent } from '../../apigee/organization/nav-button/nav-button.component';
+import { NavButtonComponent as EnvironmentNavButtonComponent } from '../../apigee/environment/nav-button/nav-button.component';
 
 @Component({
-  imports: [NavButtonComponent],
+  imports: [OrganizationNavButtonComponent, EnvironmentNavButtonComponent],
   selector: 'app-nav-left',
   templateUrl: './nav-left.component.html',
 })

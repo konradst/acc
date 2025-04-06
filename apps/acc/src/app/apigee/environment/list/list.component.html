@@ -1,0 +1,12 @@
+<h1>Environments</h1>
+<button (click)="reload()">Reload environments</button>
+<ul>
+  @for(environment of environmentStore.entities(); track
+  environment.environment) {
+  <li>
+    <button>
+      {{ environment.environment }}
+    </button>
+  </li>
+  }
+</ul>

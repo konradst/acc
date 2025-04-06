@@ -4,11 +4,11 @@ import { AuthService } from '@konradst/angular-gis';
 
 export const appRoutes: Route[] = [
   {
-    path: 'apigee/organization/select',
+    path: 'apigee/organization/list',
     canMatch: [() => inject(AuthService).isAuthenticated()],
     loadComponent: () =>
-      import('./apigee/organization/select/select.component').then(
-        (m) => m.SelectComponent
+      import('./apigee/organization/list/list.component').then(
+        (m) => m.ListComponent
       ),
   },
   {

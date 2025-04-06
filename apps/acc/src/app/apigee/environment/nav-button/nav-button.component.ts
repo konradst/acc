@@ -5,13 +5,13 @@ import {
   inject,
 } from '@angular/core';
 import { AuthService } from '@konradst/angular-gis';
-import { OrganizationStore } from '../organization.store';
 import { Router } from '@angular/router';
+import { OrganizationStore } from '../../organization/organization.store';
 
 @Component({
-  selector: 'app-apigee-organization-nav-button',
+  selector: 'app-apigee-environment-nav-button',
   templateUrl: './nav-button.component.html',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavButtonComponent {
   private readonly isAuthenticated = inject(AuthService).isAuthenticated;
@@ -20,18 +20,14 @@ export class NavButtonComponent {
   private readonly router = inject(Router);
 
   readonly disabled = computed(() => {
-    return !this.isAuthenticated();
+    return !this.isAuthenticated() || !this.selectedOrganization();
   });
 
   readonly label = computed(() => {
-    const selectedOrganization = this.selectedOrganization();
-    if (!selectedOrganization) {
-      return 'Select organization';
-    }
-    return `Organization: ${selectedOrganization.organization}`;
+    return 'List environments';
   });
 
   action() {
-    this.router.navigate(['/apigee/organization/list']);
+    this.router.navigate(['/apigee/environment/list']);
   }
 }

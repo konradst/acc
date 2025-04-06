@@ -66,7 +66,6 @@ export class AuthComponent implements AfterViewInit {
     script.type = 'text/javascript';
     script.src = 'https://accounts.google.com/gsi/client';
     script.onload = () => {
-      console.log('loaded');
       this.initClient();
     };
     this.renderer.appendChild(this.document.body, script);
