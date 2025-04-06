@@ -5,7 +5,13 @@ import {
   withProps,
   withState,
 } from '@ngrx/signals';
-import { setEntities, withEntities } from '@ngrx/signals/entities';
+import {
+  addEntity,
+  removeEntity,
+  setEntities,
+  updateEntity,
+  withEntities,
+} from '@ngrx/signals/entities';
 import { tapResponse } from '@ngrx/operators';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, switchMap, tap } from 'rxjs';
@@ -40,8 +46,8 @@ export const KvmEntryStore = signalStore(
     loadKvms: rxMethod<KvmEntryParams>(
       pipe(
         tap(() => patchState(store, { isLoading: true })),
-        switchMap((params) => {
-          return store.kvmEntryHttpService.getKvmEntries(params).pipe(
+        switchMap((meta) => {
+          return store.kvmEntryHttpService.getKvmEntries(meta).pipe(
             tapResponse({
               next: (kvmEntries) => {
                 patchState(
@@ -56,6 +62,88 @@ export const KvmEntryStore = signalStore(
               finalize: () => patchState(store, { isLoading: false }),
             })
           );
+        })
+      )
+    ),
+    updateKvmEntry: rxMethod<{
+      params: KvmEntryParams;
+      kvmEntry: KvmEntry;
+    }>(
+      pipe(
+        tap(() => patchState(store, { isLoading: true })),
+        switchMap((action) => {
+          return store.kvmEntryHttpService
+            .updateKvmEntry(action.params, action.kvmEntry)
+            .pipe(
+              tapResponse({
+                next: (kvmEntry) => {
+                  patchState(
+                    store,
+                    updateEntity(
+                      {
+                        id: kvmEntry.name,
+                        changes: kvmEntry,
+                      },
+                      {
+                        selectId: (kvmEntry) => kvmEntry.name,
+                      }
+                    )
+                  );
+                },
+                error: (error: HttpErrorResponse) =>
+                  patchState(store, { error: error.message }),
+                finalize: () => patchState(store, { isLoading: false }),
+              })
+            );
+        })
+      )
+    ),
+    createKvmEntry: rxMethod<{
+      params: KvmEntryParams;
+      kvmEntry: KvmEntry;
+    }>(
+      pipe(
+        tap(() => patchState(store, { isLoading: true })),
+        switchMap((action) => {
+          return store.kvmEntryHttpService
+            .createKvmEntry(action.params, action.kvmEntry)
+            .pipe(
+              tapResponse({
+                next: (kvmEntry) => {
+                  patchState(
+                    store,
+                    addEntity(kvmEntry, {
+                      selectId: (kvmEntry) => kvmEntry.name,
+                    })
+                  );
+                },
+                error: (error: HttpErrorResponse) =>
+                  patchState(store, { error: error.message }),
+                finalize: () => patchState(store, { isLoading: false }),
+              })
+            );
+        })
+      )
+    ),
+    deleteKvmEntry: rxMethod<{
+      params: KvmEntryParams;
+      kvmEntry: KvmEntry;
+    }>(
+      pipe(
+        tap(() => patchState(store, { isLoading: true })),
+        switchMap((action) => {
+          return store.kvmEntryHttpService
+            .deleteKvmEntry(action.params, action.kvmEntry)
+            .pipe(
+              tapResponse({
+                next: (kvmEntry) => {
+                  patchState(store, removeEntity(kvmEntry.name));
+                },
+                error: (error: HttpErrorResponse) =>
+                  patchState(store, { error: error.message }),
+                finalize: () => patchState(store, { isLoading: false }),
+              })
+            );
         })
       )
     ),

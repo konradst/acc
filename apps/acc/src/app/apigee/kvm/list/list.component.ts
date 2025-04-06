@@ -29,14 +29,18 @@ export class ListComponent {
   }
 
   reload() {
-    this.kvmStore.loadKvms({
-      organizationName: this.route.snapshot.params['organizationName'],
-      apiName: this.route.snapshot.params['apiName'],
-      environmentName: this.route.snapshot.params['environmentName'],
-    });
+    this.kvmStore.loadKvms(this.params());
   }
 
   listEntries(kvm: Kvm) {
     this.router.navigate([kvm.name, 'entry'], { relativeTo: this.route });
+  }
+
+  private params() {
+    return {
+      organizationName: this.route.snapshot.params['organizationName'],
+      apiName: this.route.snapshot.params['apiName'],
+      environmentName: this.route.snapshot.params['environmentName'],
+    };
   }
 }

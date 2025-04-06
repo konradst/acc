@@ -14,6 +14,7 @@ export class KvmEntryHttpService {
 
   /**
    * @todo api and environment entries
+   * @todo nextPageToken
    * @param kvmParams
    * @returns
    */
@@ -32,5 +33,58 @@ export class KvmEntryHttpService {
         }
       )
       .pipe(map((response) => response.keyValueEntries));
+  }
+
+  /**
+   * @todo api and environment entries
+   * @param kvmParams
+   * @returns
+   */
+  updateKvmEntry(meta: KvmEntryParams, kvmEntry: KvmEntry) {
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authService.accessToken(),
+    });
+    return this.httpClient.put<KvmEntry>(
+      `https://apigee.googleapis.com/v1/organizations/${meta.organizationName}/keyvaluemaps/${meta.kvmName}/entries/${kvmEntry.name}`,
+      kvmEntry,
+      {
+        headers,
+      }
+    );
+  }
+
+  /**
+   * @todo api and environment entries
+   * @param kvmParams
+   * @returns
+   */
+  createKvmEntry(meta: KvmEntryParams, kvmEntry: KvmEntry) {
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authService.accessToken(),
+    });
+    return this.httpClient.post<KvmEntry>(
+      `https://apigee.googleapis.com/v1/organizations/${meta.organizationName}/keyvaluemaps/${meta.kvmName}/entries`,
+      kvmEntry,
+      {
+        headers,
+      }
+    );
+  }
+
+  /**
+   * @todo api and environment entries
+   * @param kvmParams
+   * @returns
+   */
+  deleteKvmEntry(meta: KvmEntryParams, kvmEntry: KvmEntry) {
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer ' + this.authService.accessToken(),
+    });
+    return this.httpClient.delete<KvmEntry>(
+      `https://apigee.googleapis.com/v1/organizations/${meta.organizationName}/keyvaluemaps/${meta.kvmName}/entries/${kvmEntry.name}`,
+      {
+        headers,
+      }
+    );
   }
 }

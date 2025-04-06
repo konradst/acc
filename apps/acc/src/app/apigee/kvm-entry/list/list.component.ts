@@ -15,31 +15,48 @@ export class ListComponent {
   readonly kvmEntryStore = inject(KvmEntryStore);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
-  
+
   showAddModal = false;
 
   constructor() {
     this.reload();
   }
 
+  reload() {
+    this.kvmEntryStore.loadKvms(this.params());
+  }
+
   add() {
     this.showAddModal = true;
   }
 
-  delete(kvm: KvmEntry) {
-    console.log('delete', kvm);
+  create(kvmEntry: KvmEntry) {
+    this.kvmEntryStore.createKvmEntry({
+      kvmEntry,
+      params: this.params(),
+    });
   }
 
-  reload() {
-    this.kvmEntryStore.loadKvms({
+  update(kvmEntry: KvmEntry, value: string) {
+    this.kvmEntryStore.updateKvmEntry({
+      kvmEntry: { ...kvmEntry, value },
+      params: this.params(),
+    });
+  }
+
+  delete(kvmEntry: KvmEntry) {
+    this.kvmEntryStore.deleteKvmEntry({
+      kvmEntry,
+      params: this.params(),
+    });
+  }
+
+  private params() {
+    return {
       organizationName: this.route.snapshot.params['organizationName'],
       kvmName: this.route.snapshot.params['kvmName'],
       apiName: this.route.snapshot.params['apiName'],
       environmentName: this.route.snapshot.params['environmentName'],
-    });
-  }
-
-  save(kvmEntry: KvmEntry) {
-    console.log(kvmEntry);
+    };
   }
 }
