@@ -26,23 +26,30 @@ export class ListComponent {
     this.organizationStore.selectOrganization(organization);
   }
 
-  selectOrganizationKVMs(organization: Organization) {
+  selectOrganizationListKVMs(organization: Organization) {
     this.organizationStore.selectOrganization(organization);
     this.router.navigate([
+      'apigee',
       'organization',
       organization.organization,
       'keyvaluemap',
     ]);
   }
 
-  selectOrganizationAPIs(organization: Organization) {
-    this.organizationStore.selectOrganization(organization);
-    this.router.navigate(['organization', organization.organization, 'api']);
-  }
-
-  selectOrganizationEnvironments(organization: Organization) {
+  selectOrganizationListAPIs(organization: Organization) {
     this.organizationStore.selectOrganization(organization);
     this.router.navigate([
+      'apigee',
+      'organization',
+      organization.organization,
+      'api',
+    ]);
+  }
+
+  selectOrganizationListEnvironments(organization: Organization) {
+    this.organizationStore.selectOrganization(organization);
+    this.router.navigate([
+      'apigee',
       'organization',
       organization.organization,
       'environment',

@@ -28,6 +28,15 @@ export class NavButtonComponent {
   });
 
   action() {
-    this.router.navigate(['/apigee/environment/list']);
+    const organization = this.selectedOrganization()?.organization;
+    if (!organization) {
+      throw new Error('No organization selected');
+    }
+    this.router.navigate([
+      'apigee',
+      'organization',
+      organization,
+      'environment',
+    ]);
   }
 }

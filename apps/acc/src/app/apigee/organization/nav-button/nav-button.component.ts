@@ -32,6 +32,6 @@ export class NavButtonComponent {
   });
 
   action() {
-    this.router.navigate(['/apigee/organization/list']);
+    this.router.navigate(['apigee', 'organization']);
   }
 }

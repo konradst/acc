@@ -13,6 +13,7 @@ import { inject } from '@angular/core';
 import { EnvironmentHttpService } from './environment-http.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Environment } from './environment';
+import { OrganizationStore } from '../organization/organization.store';
 
 interface EnvironmentState {
   isLoading: boolean;
@@ -32,27 +33,34 @@ export const EnvironmentStore = signalStore(
   withEntities<Environment>(),
   withProps(() => ({
     environmentHttpService: inject(EnvironmentHttpService),
+    organizationStore: inject(OrganizationStore),
   })),
   withMethods((store) => ({
     loadEnvironments: rxMethod<void>(
       pipe(
         tap(() => patchState(store, { isLoading: true })),
         switchMap(() => {
-          return store.environmentHttpService.getEnvironments().pipe(
-            tapResponse({
-              next: (environments) => {
-                patchState(
-                  store,
-                  setEntities(environments, {
-                    selectId: (environment) => environment.environment,
-                  })
-                );
-              },
-              error: (error: HttpErrorResponse) =>
-                patchState(store, { error: error.message }),
-              finalize: () => patchState(store, { isLoading: false }),
-            })
-          );
+          const organization = store.organizationStore.selectedOrganization();
+          if (!organization) {
+            return [];
+          }
+          return store.environmentHttpService
+            .getEnvironments(organization)
+            .pipe(
+              tapResponse({
+                next: (environments) => {
+                  patchState(
+                    store,
+                    setEntities(environments, {
+                      selectId: (environment) => environment.environment,
+                    })
+                  );
+                },
+                error: (error: HttpErrorResponse) =>
+                  patchState(store, { error: error.message }),
+                finalize: () => patchState(store, { isLoading: false }),
+              })
+            );
         })
       )
     ),

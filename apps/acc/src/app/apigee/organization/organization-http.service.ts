@@ -12,7 +12,6 @@ export class OrganizationHttpService {
   private readonly authService = inject(AuthService);
 
   getOrganizations() {
-    console.log(this.authService.accessToken());
     const headers = new HttpHeaders({
       Authorization: 'Bearer ' + this.authService.accessToken(),
     });
