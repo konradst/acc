@@ -2,14 +2,20 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { GOOGLE_GIS_CLIENT_ID } from './google-gis-client-id.token';
 import { GOOGLE_GIS_SCOPE } from './google-gis-scope.token';
 import { GoogleTokenClient } from './gis';
+import { AuthStrategy } from './auth-strategy';
 
 @Injectable({ providedIn: 'root' })
-export class AuthService {
-  readonly clientId = inject(GOOGLE_GIS_CLIENT_ID);
-  readonly scope = inject(GOOGLE_GIS_SCOPE);
+export abstract class AuthService implements AuthStrategy {
+  protected client?: GoogleTokenClient;
 
-  client?: GoogleTokenClient;
+  protected readonly clientId = signal(inject(GOOGLE_GIS_CLIENT_ID));
+  protected readonly scope = signal(inject(GOOGLE_GIS_SCOPE));
 
-  accessToken = signal<string | undefined>(undefined);
-  isAuthenticated = computed(() => !!this.accessToken());
+  readonly accessToken = signal<string | undefined>(undefined);
+
+  readonly isAuthenticated = computed(() => !!this.accessToken());
+
+  abstract login(): void;
+
+  abstract logout(): void;
 }
