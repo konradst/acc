@@ -4,8 +4,9 @@ import {
   PLATFORM_ID,
   Provider,
 } from '@angular/core';
-import { GOOGLE_GIS_CLIENT_ID } from './google-gis-client-id.token';
 import { AuthService } from './auth.service';
+import { GOOGLE_GIS_CLIENT_ID } from './google-gis-client-id.token';
+import { GOOGLE_GIS_CLIENT_SECRET } from './google-gis-client-secret.token';
 import { GOOGLE_GIS_SCOPE } from './google-gis-scope.token';
 import { isPlatformBrowser } from '@angular/common';
 import { AuthService as BrowserAuthService } from './browser/auth.service';
@@ -18,6 +19,10 @@ export const providers: (
   {
     provide: GOOGLE_GIS_CLIENT_ID,
     useValue: options.clientId,
+  },
+  {
+    provide: GOOGLE_GIS_CLIENT_SECRET,
+    useValue: options.clientSecret,
   },
   {
     provide: GOOGLE_GIS_SCOPE,
