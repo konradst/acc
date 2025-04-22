@@ -8,7 +8,7 @@ import {
 import {
   addEntity,
   removeEntity,
-  setEntities,
+  setAllEntities,
   updateEntity,
   withEntities,
 } from '@ngrx/signals/entities';
@@ -52,7 +52,7 @@ export const KvmEntryStore = signalStore(
               next: (kvmEntries) => {
                 patchState(
                   store,
-                  setEntities(kvmEntries, {
+                  setAllEntities(kvmEntries, {
                     selectId: (kvmEntry) => kvmEntry.name,
                   })
                 );

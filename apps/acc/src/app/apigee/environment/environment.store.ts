@@ -5,7 +5,7 @@ import {
   withProps,
   withState,
 } from '@ngrx/signals';
-import { setEntities, withEntities } from '@ngrx/signals/entities';
+import { setAllEntities, withEntities } from '@ngrx/signals/entities';
 import { tapResponse } from '@ngrx/operators';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { pipe, switchMap, tap } from 'rxjs';
@@ -51,7 +51,7 @@ export const EnvironmentStore = signalStore(
                 next: (environments) => {
                   patchState(
                     store,
-                    setEntities(environments, {
+                    setAllEntities(environments, {
                       selectId: (environment) => environment.environment,
                     })
                   );

@@ -4,6 +4,7 @@ import { AuthService } from '@konradst/angular-gis';
 import { OrganizationStore } from './apigee/organization/organization.store';
 
 export const appRoutes: Route[] = [
+  // orgs
   {
     path: 'apigee/organization',
     canMatch: [() => inject(AuthService).isAuthenticated()],
@@ -34,6 +35,7 @@ export const appRoutes: Route[] = [
         (m) => m.ListComponent
       ),
   },
+  // apis
   {
     path: 'apigee/organization/:organizationName/api',
     canMatch: [
@@ -44,6 +46,29 @@ export const appRoutes: Route[] = [
     loadComponent: () =>
       import('./apigee/api/list/list.component').then((m) => m.ListComponent),
   },
+  {
+    path: 'apigee/organization/:organizationName/api/:apiName/keyvaluemap',
+    canMatch: [
+      () =>
+        inject(AuthService).isAuthenticated() &&
+        inject(OrganizationStore).selectedOrganization(),
+    ],
+    loadComponent: () =>
+      import('./apigee/kvm/list/list.component').then((m) => m.ListComponent),
+  },
+  {
+    path: 'apigee/organization/:organizationName/api/:apiName/keyvaluemap/:kvmName/entry',
+    canMatch: [
+      () =>
+        inject(AuthService).isAuthenticated() &&
+        inject(OrganizationStore).selectedOrganization(),
+    ],
+    loadComponent: () =>
+      import('./apigee/kvm-entry/list/list.component').then(
+        (m) => m.ListComponent
+      ),
+  },
+  // envs
   {
     path: 'apigee/organization/:organizationName/environment',
     canMatch: [
@@ -56,6 +81,29 @@ export const appRoutes: Route[] = [
         (m) => m.ListComponent
       ),
   },
+  {
+    path: 'apigee/organization/:organizationName/environment/:environmentName/keyvaluemap',
+    canMatch: [
+      () =>
+        inject(AuthService).isAuthenticated() &&
+        inject(OrganizationStore).selectedOrganization(),
+    ],
+    loadComponent: () =>
+      import('./apigee/kvm/list/list.component').then((m) => m.ListComponent),
+  },
+  {
+    path: 'apigee/organization/:organizationName/environment/:environmentName/keyvaluemap/:kvmName/entry',
+    canMatch: [
+      () =>
+        inject(AuthService).isAuthenticated() &&
+        inject(OrganizationStore).selectedOrganization(),
+    ],
+    loadComponent: () =>
+      import('./apigee/kvm-entry/list/list.component').then(
+        (m) => m.ListComponent
+      ),
+  },
+  // dashboard
   {
     path: 'dashboard',
     loadComponent: () =>

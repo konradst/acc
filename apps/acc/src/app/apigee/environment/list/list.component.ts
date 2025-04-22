@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { EnvironmentStore } from '../environment.store';
 import { EnvironmentHttpService } from '../environment-http.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Environment } from '../environment';
 
 @Component({
   providers: [EnvironmentHttpService],
@@ -11,6 +13,8 @@ import { EnvironmentHttpService } from '../environment-http.service';
 })
 export class ListComponent {
   readonly environmentStore = inject(EnvironmentStore);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
   constructor() {
     this.reload();
@@ -18,5 +22,11 @@ export class ListComponent {
 
   reload() {
     this.environmentStore.loadEnvironments();
+  }
+
+  listKVMs(environment: Environment) {
+    this.router.navigate([environment.environment, 'keyvaluemap'], {
+      relativeTo: this.route,
+    });
   }
 }

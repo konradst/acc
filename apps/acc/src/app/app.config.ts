@@ -6,14 +6,14 @@ import {
   withEventReplay,
 } from '@angular/platform-browser';
 import { provideAuth } from '@konradst/angular-gis';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideClientHydration(withEventReplay()),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(appRoutes),
-    provideHttpClient(),
+    provideHttpClient(withFetch()),
     provideAuth({
       clientId:
         '2823289439-lnanojvb908r3f9nfsq541hfqefn822v.apps.googleusercontent.com',

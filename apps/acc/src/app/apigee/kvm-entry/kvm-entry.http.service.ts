@@ -27,7 +27,9 @@ export class KvmEntryHttpService {
         keyValueEntries: KvmEntry[];
         nextPageToken: string;
       }>(
-        `https://apigee.googleapis.com/v1/organizations/${kvmEntryParams.organizationName}/keyvaluemaps/${kvmEntryParams.kvmName}/entries`,
+        `https://apigee.googleapis.com/v1/${this.kvmsEntriesUrl(
+          kvmEntryParams
+        )}`,
         {
           headers,
         }
@@ -40,12 +42,14 @@ export class KvmEntryHttpService {
    * @param kvmParams
    * @returns
    */
-  updateKvmEntry(meta: KvmEntryParams, kvmEntry: KvmEntry) {
+  updateKvmEntry(kvmEntryParams: KvmEntryParams, kvmEntry: KvmEntry) {
     const headers = new HttpHeaders({
       Authorization: 'Bearer ' + this.authService.accessToken(),
     });
     return this.httpClient.put<KvmEntry>(
-      `https://apigee.googleapis.com/v1/organizations/${meta.organizationName}/keyvaluemaps/${meta.kvmName}/entries/${kvmEntry.name}`,
+      `https://apigee.googleapis.com/v1/${this.kvmsEntriesUrl(
+        kvmEntryParams
+      )}/${kvmEntry.name}`,
       kvmEntry,
       {
         headers,
@@ -58,12 +62,12 @@ export class KvmEntryHttpService {
    * @param kvmParams
    * @returns
    */
-  createKvmEntry(meta: KvmEntryParams, kvmEntry: KvmEntry) {
+  createKvmEntry(kvmEntryParams: KvmEntryParams, kvmEntry: KvmEntry) {
     const headers = new HttpHeaders({
       Authorization: 'Bearer ' + this.authService.accessToken(),
     });
     return this.httpClient.post<KvmEntry>(
-      `https://apigee.googleapis.com/v1/organizations/${meta.organizationName}/keyvaluemaps/${meta.kvmName}/entries`,
+      `https://apigee.googleapis.com/v1/${this.kvmsEntriesUrl(kvmEntryParams)}`,
       kvmEntry,
       {
         headers,
@@ -76,15 +80,34 @@ export class KvmEntryHttpService {
    * @param kvmParams
    * @returns
    */
-  deleteKvmEntry(meta: KvmEntryParams, kvmEntry: KvmEntry) {
+  deleteKvmEntry(kvmEntryParams: KvmEntryParams, kvmEntry: KvmEntry) {
     const headers = new HttpHeaders({
       Authorization: 'Bearer ' + this.authService.accessToken(),
     });
     return this.httpClient.delete<KvmEntry>(
-      `https://apigee.googleapis.com/v1/organizations/${meta.organizationName}/keyvaluemaps/${meta.kvmName}/entries/${kvmEntry.name}`,
+      `https://apigee.googleapis.com/v1/${this.kvmsEntriesUrl(
+        kvmEntryParams
+      )}/${kvmEntry.name}`,
       {
         headers,
       }
     );
+  }
+
+  /**
+   * creates url kvmsEntriesUrl for organization, api, environment
+   * @param {KvmEntryParams} kvmEntryParams params
+   * @returns {string} url
+   */
+  private kvmsEntriesUrl(kvmEntryParams: KvmEntryParams) {
+    let url = 'organizations/' + kvmEntryParams.organizationName;
+    if (kvmEntryParams.apiName) {
+      url += '/apis/' + kvmEntryParams.apiName;
+    }
+    if (kvmEntryParams.environmentName) {
+      url += '/environments/' + kvmEntryParams.environmentName;
+    }
+    url += '/keyvaluemaps/' + kvmEntryParams.kvmName + '/entries';
+    return url;
   }
 }

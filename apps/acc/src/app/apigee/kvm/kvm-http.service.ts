@@ -23,7 +23,7 @@ export class KvmHttpService {
     });
     return this.httpClient
       .get<Kvm['name'][]>(
-        `https://apigee.googleapis.com/v1/organizations/${kvmParams.organizationName}/keyvaluemaps`,
+        `https://apigee.googleapis.com/v1/${this.kvmsUrl(kvmParams)}`,
         {
           headers,
         }
@@ -42,12 +42,12 @@ export class KvmHttpService {
    * @param kvmParams
    * @returns
    */
-  createKvm(meta: KvmParams, kvm: Kvm) {
+  createKvm(kvmParams: KvmParams, kvm: Kvm) {
     const headers = new HttpHeaders({
       Authorization: 'Bearer ' + this.authService.accessToken(),
     });
     return this.httpClient.post<Kvm>(
-      `https://apigee.googleapis.com/v1/organizations/${meta.organizationName}/keyvaluemaps`,
+      `https://apigee.googleapis.com/v1/${this.kvmsUrl(kvmParams)}`,
       kvm,
       {
         headers,
@@ -60,15 +60,32 @@ export class KvmHttpService {
    * @param kvmParams
    * @returns
    */
-  deleteKvm(meta: KvmParams, kvm: Kvm) {
+  deleteKvm(kvmParams: KvmParams, kvm: Kvm) {
     const headers = new HttpHeaders({
       Authorization: 'Bearer ' + this.authService.accessToken(),
     });
     return this.httpClient.delete<Kvm>(
-      `https://apigee.googleapis.com/v1/organizations/${meta.organizationName}/keyvaluemaps/${kvm.name}`,
+      `https://apigee.googleapis.com/v1/${this.kvmsUrl(kvmParams)}/${kvm.name}`,
       {
         headers,
       }
     );
+  }
+
+  /**
+   * creates url kvmsUrl for organization, api, environment
+   * @param {KvmParams} kvmParams params
+   * @returns {string} url
+   */
+  private kvmsUrl(kvmParams: KvmParams) {
+    let url = 'organizations/' + kvmParams.organizationName;
+    if (kvmParams.apiName) {
+      url += '/apis/' + kvmParams.apiName;
+    }
+    if (kvmParams.environmentName) {
+      url += '/environments/' + kvmParams.environmentName;
+    }
+    url += '/keyvaluemaps';
+    return url;
   }
 }
