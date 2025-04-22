@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 import { KvmStore } from '../kvm.store';
 import { KvmHttpService } from '../kvm-http.service';
 import { Kvm } from '../kvm';
@@ -41,6 +46,8 @@ export class ListComponent {
   listEntries(kvm: Kvm) {
     this.router.navigate([kvm.name, 'entry'], { relativeTo: this.route });
   }
+
+  breadcrumbs = signal(this.params());
 
   private params() {
     return {

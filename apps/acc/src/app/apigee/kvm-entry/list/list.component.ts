@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 import { KvmEntryStore } from '../kvm-entry.store';
 import { KvmEntryHttpService } from '../kvm-entry.http.service';
 import { KvmEntry } from '../kvm-entry';
@@ -17,6 +22,8 @@ export class ListComponent {
   private readonly route = inject(ActivatedRoute);
 
   showAddModal = false;
+
+  breadcrumbs = signal(this.params());
 
   constructor() {
     this.reload();
