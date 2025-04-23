@@ -28,7 +28,11 @@ export class KvmEntryHttpService {
     }>(
       `https://apigee.googleapis.com/v1/${this.kvmsEntriesUrl(
         kvmEntryParams
-      )}?pageSize=100&pageToken=${kvmEntryParams.nextPageToken}`,
+      )}?pageSize=100${
+        kvmEntryParams.nextPageToken
+          ? `&pageToken=${kvmEntryParams.nextPageToken}`
+          : ''
+      }`,
       {
         headers,
       }
