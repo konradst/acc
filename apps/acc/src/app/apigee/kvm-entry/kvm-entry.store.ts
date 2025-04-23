@@ -22,7 +22,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { KvmEntry } from './kvm-entry';
 import { OrganizationStore } from '../organization/organization.store';
 import { KvmEntryParams } from './kvm-entry-params';
-import { response } from 'express';
 
 interface KvmEntryState {
   isLoading: boolean;

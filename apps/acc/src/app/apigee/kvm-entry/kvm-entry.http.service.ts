@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { AuthService } from '@konradst/angular-gis';
 import { KvmEntry } from './kvm-entry';
-import { map } from 'rxjs/operators';
 import { KvmEntryParams } from './kvm-entry-params';
 
 @Injectable({
