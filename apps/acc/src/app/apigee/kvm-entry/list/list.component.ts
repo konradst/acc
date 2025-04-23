@@ -8,7 +8,7 @@ import {
 import { KvmEntryStore } from '../kvm-entry.store';
 import { KvmEntryHttpService } from '../kvm-entry.http.service';
 import { KvmEntry } from '../kvm-entry';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   providers: [KvmEntryHttpService],
@@ -19,7 +19,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ListComponent {
   readonly kvmEntryStore = inject(KvmEntryStore);
-  private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
 
   showAddModal = false;
@@ -64,7 +63,6 @@ export class ListComponent {
   });
 
   loadMore(nextPageToken: string | null) {
-    console.log(nextPageToken);
     if (!nextPageToken) return;
 
     this.kvmEntryStore.loadMoreKvmEntries({

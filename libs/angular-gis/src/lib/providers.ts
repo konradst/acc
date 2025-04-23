@@ -12,6 +12,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { AuthService as BrowserAuthService } from './browser/auth.service';
 import { AuthService as ServerAuthService } from './server/auth.service';
 import { ProviderOptions } from './provider-options';
+import { ENVIRONMENT } from './environment.token';
 
 export const providers: (
   options: ProviderOptions
@@ -27,6 +28,10 @@ export const providers: (
   {
     provide: GOOGLE_GIS_SCOPE,
     useValue: options.scope,
+  },
+  {
+    provide: ENVIRONMENT,
+    useExisting: options.environment,
   },
   {
     provide: AuthService,
