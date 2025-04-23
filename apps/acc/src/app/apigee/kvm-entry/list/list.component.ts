@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
   signal,
 } from '@angular/core';
@@ -30,7 +31,7 @@ export class ListComponent {
   }
 
   reload() {
-    this.kvmEntryStore.loadKvms(this.params());
+    this.kvmEntryStore.loadKvmEntries(this.params());
   }
 
   add() {
@@ -55,6 +56,20 @@ export class ListComponent {
     this.kvmEntryStore.deleteKvmEntry({
       kvmEntry,
       params: this.params(),
+    });
+  }
+
+  nextPageToken = computed(() => {
+    return this.kvmEntryStore.nextPageToken();
+  });
+
+  loadMore(nextPageToken: string | null) {
+    console.log(nextPageToken);
+    if (!nextPageToken) return;
+
+    this.kvmEntryStore.loadMoreKvmEntries({
+      ...this.params(),
+      nextPageToken,
     });
   }
 

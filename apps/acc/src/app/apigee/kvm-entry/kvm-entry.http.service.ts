@@ -22,19 +22,17 @@ export class KvmEntryHttpService {
     const headers = new HttpHeaders({
       Authorization: 'Bearer ' + this.authService.accessToken(),
     });
-    return this.httpClient
-      .get<{
-        keyValueEntries: KvmEntry[];
-        nextPageToken: string;
-      }>(
-        `https://apigee.googleapis.com/v1/${this.kvmsEntriesUrl(
-          kvmEntryParams
-        )}`,
-        {
-          headers,
-        }
-      )
-      .pipe(map((response) => response.keyValueEntries));
+    return this.httpClient.get<{
+      keyValueEntries: KvmEntry[];
+      nextPageToken: string;
+    }>(
+      `https://apigee.googleapis.com/v1/${this.kvmsEntriesUrl(
+        kvmEntryParams
+      )}?pageSize=100&pageToken=${kvmEntryParams.nextPageToken}`,
+      {
+        headers,
+      }
+    );
   }
 
   /**

@@ -9,6 +9,7 @@ import {
   addEntity,
   removeEntity,
   setAllEntities,
+  setEntities,
   updateEntity,
   withEntities,
 } from '@ngrx/signals/entities';
@@ -21,16 +22,19 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { KvmEntry } from './kvm-entry';
 import { OrganizationStore } from '../organization/organization.store';
 import { KvmEntryParams } from './kvm-entry-params';
+import { response } from 'express';
 
 interface KvmEntryState {
   isLoading: boolean;
   isLoaded: boolean;
+  nextPageToken: string | null;
   error: string | null;
 }
 
 const initialState: KvmEntryState = {
   isLoading: false,
   isLoaded: false,
+  nextPageToken: null,
   error: null,
 };
 
@@ -43,19 +47,47 @@ export const KvmEntryStore = signalStore(
     organizationStore: inject(OrganizationStore),
   })),
   withMethods((store) => ({
-    loadKvms: rxMethod<KvmEntryParams>(
+    loadKvmEntries: rxMethod<KvmEntryParams>(
       pipe(
         tap(() => patchState(store, { isLoading: true })),
         switchMap((meta) => {
           return store.kvmEntryHttpService.getKvmEntries(meta).pipe(
             tapResponse({
-              next: (kvmEntries) => {
+              next: (response) => {
                 patchState(
                   store,
-                  setAllEntities(kvmEntries, {
+                  setAllEntities(response.keyValueEntries, {
                     selectId: (kvmEntry) => kvmEntry.name,
                   })
                 );
+                patchState(store, {
+                  nextPageToken: response.nextPageToken,
+                });
+              },
+              error: (error: HttpErrorResponse) =>
+                patchState(store, { error: error.message }),
+              finalize: () => patchState(store, { isLoading: false }),
+            })
+          );
+        })
+      )
+    ),
+    loadMoreKvmEntries: rxMethod<KvmEntryParams>(
+      pipe(
+        tap(() => patchState(store, { isLoading: true })),
+        switchMap((meta) => {
+          return store.kvmEntryHttpService.getKvmEntries(meta).pipe(
+            tapResponse({
+              next: (response) => {
+                patchState(
+                  store,
+                  setEntities(response.keyValueEntries, {
+                    selectId: (kvmEntry) => kvmEntry.name,
+                  })
+                );
+                patchState(store, {
+                  nextPageToken: response.nextPageToken,
+                });
               },
               error: (error: HttpErrorResponse) =>
                 patchState(store, { error: error.message }),
