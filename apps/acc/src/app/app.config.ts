@@ -19,7 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     provideAuth({
       clientId: '',
-      scope: '',
+      scope: 'https://www.googleapis.com/auth/cloud-platform',
       environment: APP_ENVIRONMENT,
     }),
   ],

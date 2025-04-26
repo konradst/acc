@@ -22,14 +22,18 @@ npm install
 ### Run
 
 ```bash
-GOOGLE_GIS_SCOPE="https://www.googleapis.com/auth/cloud-platform" GOOGLE_GIS_CLIENT_ID=<your_client_id> npx nx run acc:serve
+GOOGLE_GIS_CLIENT_ID=<your_client_id> npx nx run acc:serve
 ```
+
+## Q&A
+
+### Where to get client_id ?
+
+Go to [Google Auth Platform -> Clients](https://console.cloud.google.com/auth/clients) and setup an OAuth client for your application.
 
 ## License
 
-MIT
-
-No warranty, No liability, No support.
+[MIT](./LICENSE.md)
 
 ## Open Source
 
