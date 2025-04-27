@@ -14,7 +14,7 @@ Future versions will allow entering client_id or access token in browser without
 ## Running with Docker
 
 ```
-docker run -e GOOGLE_GIS_CLIENT_ID="<your_client_id>" -p 4000:4000 konradst1/acc
+docker run -e GOOGLE_GIS_CLIENT_ID="<your_oauth_client_id>" -p 4000:4000 konradst1/acc
 ```
 
 ## Running with NPM
@@ -25,37 +25,38 @@ docker run -e GOOGLE_GIS_CLIENT_ID="<your_client_id>" -p 4000:4000 konradst1/acc
 npm install
 ```
 
-### Run
+### Run (development server)
 
 ```bash
-GOOGLE_GIS_CLIENT_ID=<your_client_id> npx nx run acc:serve
+GOOGLE_GIS_CLIENT_ID=<your_oauth_client_id> npx nx run acc:serve
+```
+
+### Run (production server)
+
+```bash
+npx nx run acc:build:production
+GOOGLE_GIS_CLIENT_ID=<your_oauth_client_id> node dist/apps/acc/server/server.mjs
 ```
 
 ## Q&A
 
-### Where to get client_id ?
+### Where to get GOOGLE_GIS_CLIENT_ID ?
 
 Go to [Google Auth Platform -> Clients](https://console.cloud.google.com/auth/clients) and setup an OAuth client for your application.
 
 ### Is there a docker image in DockerHub?
 
-Go to [konradst1/acc in DockerHub](https://hub.docker.com/r/konradst1/acc))
-
-## License
-
-[MIT](./LICENSE.md)
+Go to [konradst1/acc in DockerHub](https://hub.docker.com/r/konradst1/acc).
 
 ## Development
 
 Contributors welcome!
 
-### Building Docker image
+### TODO
 
-```
-docker build -t acc .
-```
-
-## TODO
-
-- DockerHub
 - Improve UX
+- More authorization options
+
+## License
+
+[MIT](./LICENSE.md)
