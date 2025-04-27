@@ -11,7 +11,13 @@ IF YOU REALLY NEED USING IT ON A SERVER ACCESSED FROM INTERNET, ENSURE IT'S AT L
 
 Future versions will allow entering client_id or access token in browser without server config.
 
-## Run
+## Running with Docker
+
+```
+docker run -e GOOGLE_GIS_CLIENT_ID="<your_client_id>" -p 4000:4000 konradst1/acc
+```
+
+## Running with NPM
 
 ### Install
 
@@ -31,15 +37,25 @@ GOOGLE_GIS_CLIENT_ID=<your_client_id> npx nx run acc:serve
 
 Go to [Google Auth Platform -> Clients](https://console.cloud.google.com/auth/clients) and setup an OAuth client for your application.
 
+### Is there a docker image in DockerHub?
+
+Go to [konradst1/acc in DockerHub](https://hub.docker.com/r/konradst1/acc))
+
 ## License
 
 [MIT](./LICENSE.md)
 
-## Open Source
+## Development
 
 Contributors welcome!
 
+### Building Docker image
+
+```
+docker build -t acc .
+```
+
 ## TODO
 
-- Docker
+- DockerHub
 - Improve UX
