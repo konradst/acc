@@ -1,4 +1,4 @@
-# Acc
+# Apigee Community Client 1.0.0
 
 ## WARNING
 
@@ -51,6 +51,24 @@ Go to [konradst1/acc in DockerHub](https://hub.docker.com/r/konradst1/acc).
 ## Development
 
 Contributors welcome!
+
+### Building Docker images
+
+```bash
+docker build -t konradst1/acc:<version> .
+```
+
+debug build:
+
+```bash
+docker build --progress=plain --no-cache -t konradst1/acc:<version> .
+```
+
+push to registry:
+
+```bash
+docker push konradst1/acc:<version>
+```
 
 ### TODO
 

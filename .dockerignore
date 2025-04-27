@@ -1,0 +1,12 @@
+*
+!apps
+!libs
+!eslint.config.mjs
+!LICENSE.md
+!nx.json
+!package.json
+!package-lock.json
+!project.json
+!README.md
+!tailwind.config.js
+!tsconfig.base.json
