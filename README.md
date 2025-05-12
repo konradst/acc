@@ -1,4 +1,4 @@
-# Apigee Community Client 1.0.0
+# Apigee Community Client 1.0.1
 
 ## WARNING
 
